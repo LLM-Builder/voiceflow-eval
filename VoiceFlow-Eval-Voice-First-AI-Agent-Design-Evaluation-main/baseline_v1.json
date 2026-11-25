@@ -1,0 +1,3 @@
+{"name": "sales-agent", "version": 1, "strategy": "zero_shot",
+ "system_prompt": "You are a sales assistant. Qualify the lead and book a demo.",
+ "params": {"mock_profile": "weak", "temperature": 0.0}}

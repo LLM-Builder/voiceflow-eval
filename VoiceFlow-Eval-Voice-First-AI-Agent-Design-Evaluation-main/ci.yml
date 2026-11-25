@@ -1,0 +1,25 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: backend}}
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: {POSTGRES_PASSWORD: ci, POSTGRES_DB: ci}
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready" --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pytest -q
+      - name: Validate migration against PostgreSQL
+        run: |
+          sudo apt-get install -y postgresql-client >/dev/null
+          PGPASSWORD=ci psql -h localhost -U postgres -d ci -v ON_ERROR_STOP=1 -f migrations/001_init.sql
+      - name: Scripted evaluation gate (mock adapters)
+        run: python -m app.evaluation.cli --prompt prompts/candidate_v2.json --baseline prompts/baseline_v1.json --out reports

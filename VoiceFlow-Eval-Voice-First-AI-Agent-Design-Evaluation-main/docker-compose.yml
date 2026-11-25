@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: voiceflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: voiceflow
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U voiceflow"]
+      interval: 5s
+      retries: 10
+  api:
+    build: ./backend
+    depends_on:
+      db: {condition: service_healthy}
+    environment:
+      DATABASE_URL: postgresql+psycopg://voiceflow:${POSTGRES_PASSWORD}@db:5432/voiceflow
+      VOICEFLOW_API_KEYS: ${VOICEFLOW_API_KEYS:?set in .env}
+      APP_ENV: production
+    ports: ["8000:8000"]
+volumes:
+  pgdata:

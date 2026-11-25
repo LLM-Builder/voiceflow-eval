@@ -1,0 +1,57 @@
+{
+  "high_severity_regressions": [],
+  "scenarios_compared": 36,
+  "regressions": [],
+  "improvements": [
+    "handoff-02"
+  ],
+  "regression_rate": {
+    "value": 0.0,
+    "numerator": 0,
+    "denominator": 35
+  },
+  "metric_deltas": {
+    "task_completion_rate": {
+      "baseline": 0.9722222222222222,
+      "candidate": 1.0,
+      "delta": 0.02777777777777779
+    },
+    "field_extraction_accuracy": {
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0
+    },
+    "booking_success_rate": {
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0
+    },
+    "structured_output_validity": {
+      "baseline": 0.916030534351145,
+      "candidate": 0.916030534351145,
+      "delta": 0.0
+    },
+    "recovery_success_rate": {
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0
+    },
+    "handoff_f1": {
+      "baseline": 0.9565217391304348,
+      "candidate": 1.0,
+      "delta": 0.04347826086956519
+    },
+    "intent_macro_f1": {
+      "baseline": 0.623529411764706,
+      "candidate": 1.0,
+      "delta": 0.376470588235294
+    }
+  },
+  "metrics_dropped_beyond_threshold": [],
+  "regression_detected": false,
+  "regression_config": {
+    "max_regression_rate": 0.05,
+    "max_metric_drop": 0.05,
+    "fail_on_high_severity_regression": 1.0
+  }
+}
